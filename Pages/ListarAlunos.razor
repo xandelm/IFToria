@@ -1,0 +1,53 @@
+@page "/listar-alunos"
+@inject AlunoService AlunoService
+
+<h3>Lista de Alunos</h3>
+
+@if (alunos != null && alunos.Any())
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nome de usuário</th>
+                <th>Nome completo</th>
+                <th>Curso matriculado</th>
+                <th>CPF</th>
+                <th>Data de nascimento</th>
+                <th>Email</th>
+                <th>Senha</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var aluno in alunos)
+            {
+                <tr>
+                    <td>@aluno.Nome</td>
+                    <td>@aluno.NomeCompleto</td>
+                    <td>@aluno.CursoMatriculado</td>
+                    <td>@aluno.CPF</td>
+                    <td>@aluno.DataNascimento</td>
+                    <td>@aluno.Email</td>
+                    <td>@aluno.Senha</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+else
+{
+    <p>Nenhum aluno encontrado.</p>
+}
+
+@code {
+    private List<Aluno> alunos;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await ObterAlunosAsync();
+    }
+
+    private async Task ObterAlunosAsync()
+    {
+        alunos = await AlunoService.ObterAlunosAsync();
+    }
+}
